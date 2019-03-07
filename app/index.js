@@ -1,15 +1,16 @@
 const express = require('express');
-
+const dragonRouter = require('./routes/api/dragon');
+const generationRouter = require('./routes/api/generation');
 const app = express();
 
 const GenerationEngine = require('./generation/generationEngine');
+
 const Engine = new GenerationEngine();
+app.locals.Engine = Engine;
 
+app.use('/dragon', dragonRouter);
+app.use('/dragon', generationRouter);
 Engine.start();
-
-app.get('/dragon/new', (req, res) => {
-  res.json({ dragon: Engine.generation.newDragon() });
-});
 
 module.exports = app;
 
