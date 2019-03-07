@@ -10,7 +10,7 @@ const baloo = new Dragon({
 });
 
 setTimeout(() => {
-  const merlin = new Dragon({ nickname: 'merlin' });
+  const merlin = new Dragon();
   console.log(merlin);
 }, 1000);
 
