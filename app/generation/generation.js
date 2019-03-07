@@ -4,6 +4,9 @@ const Dragon = require('../dragon');
 class Generation {
   constructor() {
     this.expiration = this.calculateDragonExpiration();
+
+    //generationId will get updated in the engine file
+    this.generationId = undefined;
   }
 
   calculateDragonExpiration() {
