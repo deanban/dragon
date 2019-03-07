@@ -1,12 +1,21 @@
-const GenerationEngine = require('./generationEngine');
+const express = require('express');
 
+const app = express();
+
+const GenerationEngine = require('./generationEngine');
 const Engine = new GenerationEngine();
 
 Engine.start();
 
-setTimeout(() => {
-  Engine.stop();
-}, 20000);
+app.get('/dragon/new', (req, res) => {
+  res.json({ dragon: Engine.generation.newDragon() });
+});
+
+const port = process.env.PORT || 3001;
+
+app.listen(port, () =>
+  console.log(`***********Server Running on Port ${port}***********`)
+);
 
 // const Generation = require('./generation');
 
