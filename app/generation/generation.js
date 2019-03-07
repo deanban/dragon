@@ -1,5 +1,5 @@
 const { REFRESH_RATE, SECONDS } = require('../config');
-const Dragon = require('../dragon');
+const Dragon = require('../dragon/dragon');
 
 class Generation {
   constructor() {
@@ -22,11 +22,16 @@ class Generation {
     return new Date(Date.now() + msUntilExpiration);
   }
 
-  newDragon({ birthday, nickname, traits } = {}) {
+  newDragon({
+    birthday,
+    nickname,
+    generationId = this.generationId,
+    traits
+  } = {}) {
     if (Date.now() > this.expiration) {
       throw new Error(`This dragon expired on ${this.expiration}`);
     }
-    return new Dragon({ birthday, nickname, traits });
+    return new Dragon({ birthday, nickname, generationId, traits });
   }
 }
 
