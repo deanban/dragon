@@ -11,7 +11,7 @@ class GenerationTable {
                 'INSERT INTO generation(expiration) VALUES($1) RETURNING id',
                 [generation.expiration],
                 (err, res) => {
-                    if (err) reject(err);
+                    if (err) return reject(err);
 
                     const generationId = res.rows[0].id;
 
