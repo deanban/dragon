@@ -15,10 +15,10 @@ Object.defineProperties(DRAGON_OBJ_DEFAULTS, {
                 const traitType = TRAITS.type;
                 const traitVals = TRAITS.values;
 
-                const randomTraitValue =
+                const traitValue =
                     traitVals[Math.floor(Math.random() * traitVals.length)];
 
-                traitsArr.push({ traitType, randomTraitValue });
+                traitsArr.push({ traitType, traitValue });
             });
 
             return traitsArr;

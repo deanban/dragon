@@ -10,8 +10,10 @@ echo "Creating Generations: Running generation.sql"
 psql -U node_user dragondb < ./bin/sql/generation.sql
 echo "Creating Dragons: Running dragon.sql"
 psql -U node_user dragondb < ./bin/sql/dragon.sql
-echo "Assaigning Traits: Running trait.sql"
+echo "Creating Traits: Running trait.sql"
 psql -U node_user dragondb < ./bin/sql/trait.sql
+echo "Assaigning Traits: Running dragonTrait.sql"
+psql -U node_user dragondb < ./bin/sql/dragonTrait.sql
 
 node ./bin/insertTraits.js
 
