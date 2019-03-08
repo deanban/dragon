@@ -8,6 +8,18 @@ const GenerationEngine = require('./generation/generationEngine');
 const Engine = new GenerationEngine();
 app.locals.Engine = Engine;
 
+//express recognizes the use of the following four params as
+//an error handling function.
+//use 'next' in the router files to have those send the errors
+//to this middleware.
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode).json({
+        type: 'error',
+        message: err.message
+    });
+});
+
 app.use('/dragon', dragonRouter);
 app.use('/dragon', generationRouter);
 Engine.start();
