@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import DragonAvatar from './DragonAvatar';
 
 class Dragon extends Component {
   state = {
@@ -13,6 +15,12 @@ class Dragon extends Component {
     this.fetchDragon();
   }
 
+  // componentWillUpdate(prevState) {
+  //   if (prevState.generationId !== this.state.generationId) {
+  //     this.fetchDragon();
+  //   }
+  // }
+
   // componentWillUnmount() {
   //   clearTimeout(this.timer);
   // }
@@ -21,7 +29,7 @@ class Dragon extends Component {
     fetch('http://localhost:3001/dragon/new')
       .then(res => res.json())
       .then((json) => {
-        console.log(json);
+        // console.log(json);
         this.setState({
           generationId: json.dragon.generationId,
           dragonId: json.dragon.dragonId,
@@ -47,18 +55,10 @@ class Dragon extends Component {
   // };
 
   render() {
-    const { generationId, dragonId, traits } = this.state;
     return (
       <div>
-        <span>
-          Generation:
-          {generationId}
-        </span>
-        <span>
-          Dragon:
-          {dragonId}
-        </span>
-        {traits.map(trait => trait.traitValue).join(', ')}
+        <Button onClick={this.fetchDragon}>New Dragon</Button>
+        <DragonAvatar dragon={this.state} />
       </div>
     );
   }
