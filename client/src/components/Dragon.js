@@ -9,21 +9,9 @@ class Dragon extends Component {
     traits: []
   };
 
-  // timer = null;
-
   componentDidMount() {
     this.fetchDragon();
   }
-
-  // componentWillUpdate(prevState) {
-  //   if (prevState.generationId !== this.state.generationId) {
-  //     this.fetchDragon();
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   clearTimeout(this.timer);
-  // }
 
   fetchDragon = () => {
     fetch('http://localhost:3001/dragon/new')
