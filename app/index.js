@@ -1,7 +1,12 @@
 const express = require('express');
+const cors = require('cors');
+
 const dragonRouter = require('./routes/api/dragon');
 const generationRouter = require('./routes/api/generation');
+
 const app = express();
+
+app.use(cors());
 
 const GenerationEngine = require('./generation/generationEngine');
 
