@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getGeneration } from '../actions/generationAction';
 
 class Generation extends Component {
   state = {
-    generationId: '',
-    expiration: '',
     minDelay: 3000
   };
 
@@ -17,20 +17,11 @@ class Generation extends Component {
     clearTimeout(this.timer);
   }
 
-  fetchGeneration = () => {
-    fetch('http://localhost:3001/dragon/generation')
-      .then(res => res.json())
-      .then((json) => {
-        this.setState({
-          generationId: json.generation.generationId,
-          expiration: json.generation.expiration
-        });
-      });
-  };
-
   fetchNextGeneration = () => {
-    const { minDelay, expiration } = this.state;
-    this.fetchGeneration();
+    const { minDelay } = this.state;
+    const { expiration } = this.props.generation;
+
+    this.props.getGeneration();
 
     let delay = new Date(expiration).getTime() - new Date().getTime();
 
@@ -44,7 +35,7 @@ class Generation extends Component {
   };
 
   render() {
-    const { generationId, expiration } = this.state;
+    const { generationId, expiration } = this.props.generation;
     return (
       <div>
         <h3>
@@ -60,4 +51,9 @@ class Generation extends Component {
   }
 }
 
-export default Generation;
+const mapStatetoProps = state => ({ generation: state.generation.generation });
+
+export default connect(
+  mapStatetoProps,
+  { getGeneration }
+)(Generation);
