@@ -30,18 +30,3 @@ export const getGeneration = () => (dispatch) => {
     })
     .catch(err => console.log(err));
 };
-
-export const fetchNextGeneration = (expiration, timer) => (dispatch) => {
-  const minDelay = 3000;
-  dispatch(getGeneration());
-
-  let delay = new Date(expiration).getTime() - new Date().getTime();
-
-  if (delay < minDelay) {
-    delay = minDelay;
-  }
-
-  timer = setTimeout(() => {
-    fetchNextGeneration(expiration, timer);
-  }, delay);
-};

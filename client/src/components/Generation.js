@@ -20,8 +20,9 @@ class Generation extends Component {
   fetchNextGeneration = () => {
     const { minDelay } = this.state;
     const { expiration } = this.props.generation;
+    const { getGeneration } = this.props;
 
-    this.props.getGeneration();
+    getGeneration();
 
     let delay = new Date(expiration).getTime() - new Date().getTime();
 
