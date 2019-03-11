@@ -15,7 +15,7 @@
     "client": "yarn --cwd client start",
     "configure": "./bin/configure_db.sh",
     "confdev": "yarn configure && yarn dev",
-    "both": "concurrently \"yarn confdev\" \"yarn client\""
+    "both": "concurrently \"yarn dev\" \"yarn client\""
   },
   "dependencies": {
     "concurrently": "^4.1.0",
