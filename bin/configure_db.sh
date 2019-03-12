@@ -6,6 +6,8 @@ dropdb -U node_user dragondb
 echo "Creating dragondb"
 createdb -U node_user dragondb
 
+echo "Creating Account: Running account.sql"
+psql -U node_user dragondb < ./bin/sql/account.sql
 echo "Creating Generations: Running generation.sql"
 psql -U node_user dragondb < ./bin/sql/generation.sql
 echo "Creating Dragons: Running dragon.sql"

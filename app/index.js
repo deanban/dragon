@@ -1,12 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const dragonRouter = require('./routes/api/dragon');
 const generationRouter = require('./routes/api/generation');
+const accountRouter = require('./routes/api/account');
 
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 
 const GenerationEngine = require('./generation/generationEngine');
 
@@ -28,6 +31,7 @@ app.use((err, req, res, next) => {
 app.use('/dragon', dragonRouter);
 app.use('/dragon', generationRouter);
 Engine.start();
+app.use('/account', accountRouter);
 
 module.exports = app;
 

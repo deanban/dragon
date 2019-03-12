@@ -18,6 +18,8 @@
     "both": "concurrently \"yarn dev\" \"yarn client\""
   },
   "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
