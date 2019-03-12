@@ -21,6 +21,20 @@ class AccountTable {
             });
         });
     }
+
+    static getAccount({ username }) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                `SELECT id, password FROM account
+                 WHERE username=$1`,
+                [username],
+                (err, res) => {
+                    if (err) return reject(err);
+                    resolve({ account: res.rows[0] });
+                }
+            );
+        });
+    }
 }
 
 module.exports = AccountTable;
