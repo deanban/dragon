@@ -1,32 +1,35 @@
-import {
-  GENERATION_ACTION_TYPE,
-  LOADING_GENERATIONS,
-  GENERATION_LOADED
-} from '../actions/types';
+import { GENERATION } from '../actions/types';
 
 const initialState = {
   generation: { generationId: '', expiration: '' },
-  loading: false
+  loading: false,
+  error: ''
 };
 
 const generationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_GENERATIONS:
+    case GENERATION.LOADING_GENERATIONS:
       return {
         ...state,
         loading: true
       };
 
-    case GENERATION_ACTION_TYPE:
+    case GENERATION.GENERATION_ACTION_TYPE:
       return {
         ...state,
         generation: action.payload
       };
 
-    case GENERATION_LOADED:
+    case GENERATION.GENERATION_LOADED:
       return {
         ...state,
         loading: false
+      };
+
+    case GENERATION.GENERATION_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
 
     default:

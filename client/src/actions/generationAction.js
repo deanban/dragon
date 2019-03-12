@@ -1,15 +1,11 @@
-import {
-  GENERATION_ACTION_TYPE,
-  LOADING_GENERATIONS,
-  GENERATION_LOADED
-} from './types';
+import { GENERATION } from './types';
 
 const setLoadingTrue = () => ({
-  type: LOADING_GENERATIONS
+  type: GENERATION.LOADING_GENERATIONS
 });
 
 const setLoadingFalse = () => ({
-  type: GENERATION_LOADED
+  type: GENERATION.GENERATION_LOADED
 });
 
 export const getGeneration = () => (dispatch) => {
@@ -20,13 +16,23 @@ export const getGeneration = () => (dispatch) => {
     .then(resp => resp.json())
     .then((data) => {
       // debugger;
-      dispatch({
-        type: GENERATION_ACTION_TYPE,
-        payload: data.generation
-      });
+      if (data.type === 'error') {
+        dispatch({
+          type: GENERATION.GENERATION_ERROR,
+          payload: data.message
+        });
+      } else {
+        dispatch({
+          type: GENERATION.GENERATION_ACTION_TYPE,
+          payload: data.generation
+        });
+      }
     })
     .then(() => {
       dispatch(setLoadingFalse());
     })
-    .catch(err => console.log(err));
+    .catch(err => dispatch({
+      type: GENERATION.GENERATION_ERROR,
+      payload: err.message
+    }));
 };
