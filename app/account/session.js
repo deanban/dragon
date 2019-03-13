@@ -36,14 +36,16 @@ class Session {
 
         const accountData = Session.accountData({ username, id });
 
-        return Session.sessionString() === sessionHash;
+        return bcrypt.compareSync(accountData, sessionHash);
     }
 }
 
-const dean = new Session({ username: 'dean' });
-const deanStr = dean.toString();
+// const dean = new Session({ username: 'dean', id: 123456 });
+// const deanStr = dean.toString();
+// const fakeStr = `adimin_${deanStr}`;
 
-console.log(Session.parse(deanStr));
-console.log(Session.verify(deanStr));
+// console.log(Session.parse(deanStr));
+// console.log(Session.verify(deanStr));
+// console.log(Session.verify(fakeStr));
 
 module.exports = Session;

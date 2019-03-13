@@ -1,5 +1,6 @@
 const express = require('express');
 const AccountTable = require('../../account/table');
+const Session = require('../../account/session');
 
 const router = express.Router();
 
@@ -20,10 +21,22 @@ router.post('/signup', (req, res, next) => {
             }
         })
         //this .then() is the returned promise from storeAccount call
-        //which has been chained instead of using .then()
+        //which has ben chained instead of using .then()
         //after storeAccount() call.
-        .then(() => res.json({ message: 'Success!' }))
-        //this catch also ctched any thrown error like on line 19
+        .then(() => {
+            const session = new Session({ username });
+            const sessionStr = session.toString();
+
+            //set a cookie
+            res.cookie('sessionStr', sessionStr, {
+                expire: Date.now() + 3600000,
+                httpOnly: true
+                // secure: true //will only be sent over https
+            });
+
+            res.json({ message: 'Success!' });
+        })
+        //this catch also catches any thrown error like on line 20
         .catch(error => next(error));
 });
 
