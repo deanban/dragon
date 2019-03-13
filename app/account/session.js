@@ -33,7 +33,7 @@ class Session {
 
     static verify(sessionString) {
         const { username, id, sessionHash } = Session.parse(sessionString);
-
+        console.log(sessionHash.split('').length);
         const accountData = Session.accountData({ username, id });
 
         return bcrypt.compareSync(accountData, sessionHash);

@@ -35,6 +35,20 @@ class AccountTable {
             );
         });
     }
+
+    static updateSessionId({ sessionId, username }) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                `UPDATE account SET "sessionId"=$1
+                 WHERE username=$2`,
+                [sessionId, username],
+                (err, res) => {
+                    if (err) return reject(err);
+                    resolve();
+                }
+            );
+        });
+    }
 }
 
 module.exports = AccountTable;
