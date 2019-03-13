@@ -21,7 +21,29 @@ class Session {
         const hash = bcrypt.hashSync(accountData, 10);
         return `${accountData}|${hash}`;
     }
+
+    static parse(sessionString) {
+        const sessionData = sessionString.split('|');
+        return {
+            username: sessionData[0],
+            id: sessionData[1],
+            sessionHash: sessionData[2]
+        };
+    }
+
+    static verify(sessionString) {
+        const { username, id, sessionHash } = Session.parse(sessionString);
+
+        const accountData = Session.accountData({ username, id });
+
+        return Session.sessionString() === sessionHash;
+    }
 }
-// console.log(Session.sessionString({ username: 'dean', id: '12455' }));
+
+const dean = new Session({ username: 'dean' });
+const deanStr = dean.toString();
+
+console.log(Session.parse(deanStr));
+console.log(Session.verify(deanStr));
 
 module.exports = Session;
