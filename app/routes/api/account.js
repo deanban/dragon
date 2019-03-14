@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const AccountTable = require('../../account/table');
+const Session = require('../../account/session');
 
 const { setSession } = require('./helper');
 
@@ -45,21 +46,34 @@ router.post('/login', (req, res, next) => {
     const { username, password } = req.body;
     AccountTable.getAccount({ username })
         .then(({ account }) => {
-            // console.log(bcrypt.compareSync(password, account.password.trim()));
             if (
                 account &&
                 bcrypt.compareSync(password, account.password.trim())
             ) {
-                console.log('Password Match');
-                return setSession({ username, res });
+                const { sessionId } = account;
+                // res.json({ account });
+                return setSession({ username, res, sessionId });
             } else {
-                const error = new Error('Incorrect Password');
+                const error = new Error(
+                    'Account does not exits or incorrect password'
+                );
                 error.statusCode = 409;
                 throw error;
             }
         })
         .then(message => {
             res.json(message);
+        })
+        .catch(err => next(err));
+});
+
+router.get('/logout', (req, res, next) => {
+    const { username } = Session.parse(req.cookies.sessionStr);
+    console.log(req.cookies);
+    AccountTable.updateSessionId({ sessionId: null, username })
+        .then(() => {
+            res.clearCookie('sessionStr');
+            res.json({ message: 'Logout Successful' });
         })
         .catch(err => next(err));
 });

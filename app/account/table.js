@@ -21,7 +21,7 @@ class AccountTable {
     static getAccount({ username }) {
         return new Promise((resolve, reject) => {
             pool.query(
-                `SELECT id, password FROM account
+                `SELECT id, password, "sessionId" FROM account
                  WHERE username=$1`,
                 [username],
                 (err, res) => {

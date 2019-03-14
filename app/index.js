@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const dragonRouter = require('./routes/api/dragon');
 const generationRouter = require('./routes/api/generation');
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 const GenerationEngine = require('./generation/generationEngine');
 
