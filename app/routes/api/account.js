@@ -45,19 +45,21 @@ router.post('/login', (req, res, next) => {
     const { username, password } = req.body;
     AccountTable.getAccount({ username })
         .then(({ account }) => {
-            console.log(password);
-            console.log(account.password);
-            console.log(bcrypt.compareSync(password, account.password));
-            if (account && bcrypt.compareSync(password, account.password)) {
+            // console.log(bcrypt.compareSync(password, account.password.trim()));
+            if (
+                account &&
+                bcrypt.compareSync(password, account.password.trim())
+            ) {
+                console.log('Password Match');
                 return setSession({ username, res });
             } else {
-                const error = new Error('Incorrect username/password');
+                const error = new Error('Incorrect Password');
                 error.statusCode = 409;
                 throw error;
             }
         })
-        .then(({ message }) => {
-            res.json({ message });
+        .then(message => {
+            res.json(message);
         })
         .catch(err => next(err));
 });

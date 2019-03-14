@@ -16,7 +16,10 @@ const setSession = ({ username, res }) => {
                 });
                 resolve({ message: 'Session created' });
             })
-            .catch(err => reject(err));
+            .catch(err => {
+                // console.log(err);
+                reject(err);
+            });
     });
 };
 
