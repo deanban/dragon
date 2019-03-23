@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { signup } from '../actions/accountAction';
 
@@ -41,14 +42,15 @@ class Auth extends Component {
   }
 
   render() {
-    console.log(this.props.account);
+    // console.log(this.props.account);
+    const { username, password } = this.state;
     return (
       <div>
         <h2>Dragon Stack</h2>
         <FormGroup>
           <FormControl
             type="text"
-            value={this.state.username}
+            value={username}
             placeholder="User Name"
             onChange={event => this.updateInput(event.target.value, 'username')}
           />
@@ -56,7 +58,7 @@ class Auth extends Component {
         <FormGroup>
           <FormControl
             type="password"
-            value={this.state.password}
+            value={password}
             placeholder="Password"
             onChange={event => this.updateInput(event.target.value, 'password')}
           />
@@ -72,6 +74,11 @@ class Auth extends Component {
     );
   }
 }
+
+Auth.propTypes = {
+  account: PropTypes.object.isRequired,
+  signup: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   account: state.account

@@ -23,6 +23,14 @@ const accountReducer = (state = initialState, action) => {
         status: 'success'
       };
 
+    case ACCOUNT.FETCH_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        message: action.message,
+        loggedIn: false,
+        status: 'logout success'
+      };
+
     case ACCOUNT.ACCOUNT_LOADED:
       return {
         ...state,
