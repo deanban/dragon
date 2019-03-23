@@ -26,7 +26,22 @@ class Auth extends Component {
     console.log(this.state);
   };
 
+  get Error() {
+    const { status, error } = this.props.account;
+    if (
+      status === 'failed'
+      && error === 'Unexpected token < in JSON at position 0'
+    ) {
+      return (
+        <div>
+          <h3>Username Already Exists</h3>
+        </div>
+      );
+    }
+  }
+
   render() {
+    console.log(this.props.account);
     return (
       <div>
         <h2>Dragon Stack</h2>
@@ -51,12 +66,18 @@ class Auth extends Component {
           <span> or </span>
           <Button onClick={this.signup}>Sign Up</Button>
         </div>
+        <br />
+        {this.Error}
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  account: state.account
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { signup }
 )(Auth);

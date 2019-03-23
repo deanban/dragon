@@ -19,7 +19,8 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
         message: action.message,
-        loggedIn: true
+        loggedIn: true,
+        status: 'success'
       };
 
     case ACCOUNT.ACCOUNT_LOADED:
@@ -31,7 +32,8 @@ const accountReducer = (state = initialState, action) => {
     case ACCOUNT.ACCOUNT_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        status: 'failed'
       };
 
     default:

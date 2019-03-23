@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Home from './Home';
 import Auth from './Auth';
 
-export default class Root extends Component {
+class Root extends Component {
   render() {
-    return false ? <Home /> : <Auth />;
+    return this.props.account.loggedIn ? <Home /> : <Auth />;
   }
 }
+
+export default connect(
+  ({ account }) => ({ account }),
+  null
+)(Root);
