@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const AccountTable = require('../../account/table');
 const Session = require('../../account/session');
 
-const { setSession } = require('./helper');
+const { setSession, authenticatedAccount } = require('./helper');
 
 const router = express.Router();
 
@@ -81,20 +81,11 @@ router.get('/logout', (req, res, next) => {
 router.get('/authenticated', (req, res, next) => {
     const { sessionStr } = req.cookies;
 
-    if (!sessionStr || !Session.verify(sessionStr)) {
-        const error = new Error('Invalid Session');
-        error.statusCode = 400;
-        return next(error);
-    } else {
-        const { username, id } = Session.parse(sessionStr);
-
-        AccountTable.getAccount({ username })
-            .then(({ account }) => {
-                const authenticated = account.sessionId === id;
-                res.json({ authenticated });
-            })
-            .catch(err => next(err));
-    }
+    authenticatedAccount({ sessionStr })
+        .then(({ authenticated }) => {
+            res.json({ authenticated });
+        })
+        .catch(err => next(err));
 });
 
 module.exports = router;

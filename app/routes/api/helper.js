@@ -36,4 +36,23 @@ const setSessionCookie = ({ sessionStr, res }) => {
     });
 };
 
-module.exports = { setSession };
+const authenticatedAccount = ({ sessionStr }) => {
+    return new Promise((resolve, reject) => {
+        if (!sessionStr || !Session.verify(sessionStr)) {
+            const error = new Error('Invalid Session');
+            error.statusCode = 400;
+            return reject(error);
+        } else {
+            const { username, id } = Session.parse(sessionStr);
+
+            AccountTable.getAccount({ username })
+                .then(({ account }) => {
+                    const authenticated = account.sessionId === id;
+                    resolve({ account, authenticated });
+                })
+                .catch(err => reject(err));
+        }
+    });
+};
+
+module.exports = { setSession, authenticatedAccount };
