@@ -16,6 +16,8 @@ echo "Creating Traits: Running trait.sql"
 psql -U node_user dragondb < ./bin/sql/trait.sql
 echo "Assaigning Traits: Running dragonTrait.sql"
 psql -U node_user dragondb < ./bin/sql/dragonTrait.sql
+echo "Assaigning Dragons to Users: Running accountDragon.sql"
+psql -U node_user dragondb < ./bin/sql/accountDragon.sql
 
 node ./bin/insertTraits.js
 
