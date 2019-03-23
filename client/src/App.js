@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 
 import './App.css';
 
-import Generation from './components/Generation';
-import Dragon from './components/Dragon';
+// import Generation from './components/Generation';
+import Root from './components/Root';
 
 import store from './store/store';
 
@@ -22,8 +22,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <Generation />
-          <Dragon />
+          <Root />
         </div>
       </Provider>
     );
