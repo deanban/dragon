@@ -9,7 +9,7 @@ const accountRouter = require('./routes/api/account');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
