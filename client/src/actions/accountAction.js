@@ -66,6 +66,12 @@ export const logout = () => fetchAccountType({
   SUCCESS_TYPE: ACCOUNT.FETCH_LOGOUT_SUCCESS
 });
 
+export const fetchAuthenticated = () => fetchAccountType({
+  endpoint: 'authenticated',
+  opts: { credentials: 'include' },
+  SUCCESS_TYPE: ACCOUNT.FETCH_AUTHENTICATED_SUCCESS
+});
+
 // export const signup = ({ username, password }) => (dispatch) => {
 //   dispatch(setLoadingTrue());
 

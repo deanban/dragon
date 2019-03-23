@@ -78,4 +78,23 @@ router.get('/logout', (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.get('/authenticated', (req, res, next) => {
+    const { sessionStr } = req.cookies;
+
+    if (!sessionStr || !Session.verify(sessionStr)) {
+        const error = new Error('Invalid Session');
+        error.statusCode = 400;
+        return next(error);
+    } else {
+        const { username, id } = Session.parse(sessionStr);
+
+        AccountTable.getAccount({ username })
+            .then(({ account }) => {
+                const authenticated = account.sessionId === id;
+                res.json({ authenticated });
+            })
+            .catch(err => next(err));
+    }
+});
+
 module.exports = router;

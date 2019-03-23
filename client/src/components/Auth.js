@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Button, FormGroup, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { signup } from '../actions/accountAction';
+import { signup, login } from '../actions/accountAction';
 
 class Auth extends Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    buttonClicked: false
   };
 
   updateInput = (value, type) => {
@@ -19,18 +20,23 @@ class Auth extends Component {
 
   signup = () => {
     // console.log(this.state);
+    this.setState({ buttonClicked: true });
     const { username, password } = this.state;
     this.props.signup({ username, password });
   };
 
   login = () => {
-    console.log(this.state);
+    // console.log(this.state);
+    this.setState({ buttonClicked: true });
+    const { username, password } = this.state;
+    this.props.login({ username, password });
   };
 
   get Error() {
     const { status, error } = this.props.account;
     if (
-      status === 'failed'
+      this.state.buttonClicked
+      && status === 'failed'
       && error === 'Unexpected token < in JSON at position 0'
     ) {
       return (
@@ -77,7 +83,8 @@ class Auth extends Component {
 
 Auth.propTypes = {
   account: PropTypes.object.isRequired,
-  signup: PropTypes.func.isRequired
+  signup: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -86,5 +93,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { signup }
+  { signup, login }
 )(Auth);

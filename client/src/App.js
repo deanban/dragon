@@ -16,7 +16,6 @@ import store from './store/store';
 // });
 
 // console.log(store.getState());
-
 class App extends Component {
   render() {
     return (

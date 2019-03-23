@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const accountReducer = (state = initialState, action) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case ACCOUNT.LOADING_ACCOUNT:
       return {
@@ -29,6 +29,14 @@ const accountReducer = (state = initialState, action) => {
         message: action.message,
         loggedIn: false,
         status: 'logout success'
+      };
+
+    case ACCOUNT.FETCH_AUTHENTICATED_SUCCESS:
+      return {
+        ...state,
+        message: action.message,
+        loggedIn: action.authenticated,
+        status: 'authenticated success'
       };
 
     case ACCOUNT.ACCOUNT_LOADED:
