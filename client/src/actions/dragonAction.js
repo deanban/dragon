@@ -11,7 +11,7 @@ const setLoadingFalse = () => ({
 export const fetchNewDragon = () => (dispatch) => {
   dispatch(setLoadingTrue());
 
-  fetch('http://localhost:3001/dragon/new')
+  fetch('http://localhost:3001/dragon/new', { credentials: 'include' })
     .then(res => res.json())
     .then((json) => {
       // console.log(json);
@@ -27,6 +27,7 @@ export const fetchNewDragon = () => (dispatch) => {
         });
       }
     })
+    .then(() => setLoadingFalse())
     .catch(err => dispatch({
       type: DRAGON.DRAGON_ERROR,
       payload: err.message

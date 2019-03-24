@@ -1,17 +1,28 @@
 const express = require('express');
 const DragonTable = require('../../dragon/table');
+const AccountDragonTable = require('../../accountDragon/table');
+const { authenticatedAccount } = require('./helper');
 
 const router = express.Router();
 
 router.get('/new', (req, res, next) => {
-    const dragon = req.app.locals.Engine.generation.newDragon();
+    let accountId, dragon;
 
-    DragonTable.storeDragon(dragon)
-        .then(({ dragonId }) => {
-            console.log('dragonId', dragonId);
-            dragon.dragonId = dragonId;
-            res.json({ dragon });
+    authenticatedAccount({ sessionStr: req.cookies.sessionStr })
+        .then(({ account }) => {
+            accountId = account.id;
+            dragon = req.app.locals.Engine.generation.newDragon();
+            return DragonTable.storeDragon(dragon);
         })
+        .then(({ dragonId }) => {
+            // console.log('dragonId', dragonId);
+            dragon.dragonId = dragonId;
+            return AccountDragonTable.storeAccountDragon({
+                accountId,
+                dragonId
+            });
+        })
+        .then(() => res.json({ dragon }))
         .catch(err => next(err));
 });
 
