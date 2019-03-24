@@ -63,6 +63,19 @@ class DragonTable {
             );
         });
     }
+
+    static updateDragon({ dragonId, nickname }) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                'UPDATE dragon SET nickname=$1 WHERE id=$2',
+                [nickname, dragonId],
+                (err, res) => {
+                    if (err) return reject(err);
+                    resolve();
+                }
+            );
+        });
+    }
 }
 
 // DragonTable.getDragon({ dragonId: 1 })
