@@ -26,4 +26,11 @@ router.get('/new', (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.put('/update', (req, res, next) => {
+    const { dragonId, nickname } = req.body;
+    DragonTable.updateDragon({ dragonId, nickname })
+        .then(() => res.json({ message: 'Successfully Updated Dragon' }))
+        .catch(err => next(err));
+});
+
 module.exports = router;
