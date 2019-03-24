@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import DragonAvatar from './DragonAvatar';
 
+// MVP done
+
 export default class AccountDragonRow extends Component {
   state = {
     nickname: this.props.dragon.nickname,
