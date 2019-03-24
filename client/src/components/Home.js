@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import Generation from './Generation';
 import Dragon from './Dragon';
+import AccountDragons from './AccountDragons';
+
 import { logout } from '../actions/accountAction';
 
 class Home extends Component {
@@ -15,6 +17,8 @@ class Home extends Component {
         </Button>
         <Generation />
         <Dragon />
+        <br />
+        <AccountDragons />
       </div>
     );
   }
