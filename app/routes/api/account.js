@@ -1,9 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const AccountTable = require('../../account/table');
+const AccountDragonTable = require('../../accountDragon/table');
 const Session = require('../../account/session');
 
 const { setSession, authenticatedAccount } = require('./helper');
+const { getDragonWithTraits } = require('../../dragon/helper');
 
 const router = express.Router();
 
@@ -84,6 +86,29 @@ router.get('/authenticated', (req, res, next) => {
     authenticatedAccount({ sessionStr })
         .then(({ authenticated }) => {
             res.json({ authenticated });
+        })
+        .catch(err => next(err));
+});
+
+router.get('/dragons', (req, res, next) => {
+    authenticatedAccount({ sessionStr: req.cookies.sessionStr })
+        .then(({ account }) => {
+            // res.json({ authenticated });
+            return AccountDragonTable.getAccountDragons({
+                accountId: account.id
+            });
+        })
+        .then(({ accountDragons }) => {
+            return Promise.all(
+                accountDragons.map(accountDragon => {
+                    return getDragonWithTraits({
+                        dragonId: accountDragon.dragonId
+                    });
+                })
+            );
+        })
+        .then(dragons => {
+            res.json({ dragons });
         })
         .catch(err => next(err));
 });

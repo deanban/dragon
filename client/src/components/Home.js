@@ -20,6 +20,12 @@ class Home extends Component {
   }
 }
 
+// fetch('http://localhost:3001/account/dragons', {
+//   credentials: 'include'
+// })
+//   .then(res => res.json())
+//   .then(data => console.log(data));
+
 export default connect(
   null,
   { logout }
