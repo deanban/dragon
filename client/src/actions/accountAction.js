@@ -1,16 +1,23 @@
 import { ACCOUNT } from './types';
 
-const setLoadingTrue = () => ({
-  type: ACCOUNT.LOADING_ACCOUNT
+const setLoadingTrue = LOADING_TYPE => ({
+  type: LOADING_TYPE
 });
 
-const setLoadingFalse = () => ({
-  type: ACCOUNT.ACCOUNT_LOADED
+const setLoadingFalse = LOADING_TYPE => ({
+  type: LOADING_TYPE
 });
 
 // one function to rule them all
-const fetchAccountType = ({ endpoint, opts, SUCCESS_TYPE }) => (dispatch) => {
-  dispatch(setLoadingTrue());
+export const fetchAccountType = ({
+  endpoint,
+  opts,
+  LOADING_TYPE1,
+  LOADING_TYPE2,
+  ERROR_TYPE,
+  SUCCESS_TYPE
+}) => (dispatch) => {
+  dispatch(setLoadingTrue(LOADING_TYPE1));
 
   fetch(`http://localhost:3001/account/${endpoint}`, opts)
     .then(res => res.json())
@@ -18,7 +25,7 @@ const fetchAccountType = ({ endpoint, opts, SUCCESS_TYPE }) => (dispatch) => {
       // console.log(json);
       if (json.type === 'error') {
         dispatch({
-          type: ACCOUNT.ACCOUNT_ERROR,
+          type: ERROR_TYPE,
           payload: json.message
         });
       } else {
@@ -28,9 +35,9 @@ const fetchAccountType = ({ endpoint, opts, SUCCESS_TYPE }) => (dispatch) => {
         });
       }
     })
-    .then(() => dispatch(setLoadingFalse()))
+    .then(() => dispatch(setLoadingFalse(LOADING_TYPE2)))
     .catch(err => dispatch({
-      type: ACCOUNT.ACCOUNT_ERROR,
+      type: ERROR_TYPE,
       payload: err.message
     }));
 };
@@ -46,6 +53,9 @@ export const signup = ({ username, password }) => fetchAccountType({
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include'
   },
+  LOADING_TYPE1: ACCOUNT.LOADING_ACCOUNT,
+  LOADING_TYPE2: ACCOUNT.ACCOUNT_LOADED,
+  ERROR_TYPE: ACCOUNT.ACCOUNT_ERROR,
   SUCCESS_TYPE: ACCOUNT.FETCH_ACCOUNT_SUCCESS
 });
 
@@ -57,18 +67,27 @@ export const login = ({ username, password }) => fetchAccountType({
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include'
   },
+  LOADING_TYPE1: ACCOUNT.LOADING_ACCOUNT,
+  LOADING_TYPE2: ACCOUNT.ACCOUNT_LOADED,
+  ERROR_TYPE: ACCOUNT.ACCOUNT_ERROR,
   SUCCESS_TYPE: ACCOUNT.FETCH_ACCOUNT_SUCCESS
 });
 
 export const logout = () => fetchAccountType({
   endpoint: 'logout',
   opts: { credentials: 'include' },
+  LOADING_TYPE1: ACCOUNT.LOADING_ACCOUNT,
+  LOADING_TYPE2: ACCOUNT.ACCOUNT_LOADED,
+  ERROR_TYPE: ACCOUNT.ACCOUNT_ERROR,
   SUCCESS_TYPE: ACCOUNT.FETCH_LOGOUT_SUCCESS
 });
 
 export const fetchAuthenticated = () => fetchAccountType({
   endpoint: 'authenticated',
   opts: { credentials: 'include' },
+  LOADING_TYPE1: ACCOUNT.LOADING_ACCOUNT,
+  LOADING_TYPE2: ACCOUNT.ACCOUNT_LOADED,
+  ERROR_TYPE: ACCOUNT.ACCOUNT_ERROR,
   SUCCESS_TYPE: ACCOUNT.FETCH_AUTHENTICATED_SUCCESS
 });
 
