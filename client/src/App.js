@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-
+import { Router, Switch, Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import './App.css';
 
-// import Generation from './components/Generation';
-import Root from './components/Root';
-
 import store from './store/store';
+
+import Root from './components/Root';
+import AccountDragons from './components/AccountDragons';
 
 // const store = createStore(generationReducer);
 
@@ -16,12 +17,20 @@ import store from './store/store';
 // });
 
 // console.log(store.getState());
+
+const history = createBrowserHistory();
+
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <div className="App">
-          <Root />
+          <Router history={history}>
+            <Switch>
+              <Route exact path="/" component={Root} />
+              <Route exact path="/account-dragons" component={AccountDragons} />
+            </Switch>
+          </Router>
         </div>
       </Provider>
     );
