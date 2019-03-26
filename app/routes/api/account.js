@@ -113,4 +113,12 @@ router.get('/dragons', (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.get('/info', (req, res, next) => {
+    authenticatedAccount({ sessionStr: req.cookies.sessionStr })
+        .then(({ username, account }) => {
+            res.json({ info: { balance: account.balance, username } });
+        })
+        .catch(err => next(err));
+});
+
 module.exports = router;

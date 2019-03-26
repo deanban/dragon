@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const pool = require('../../pgPool');
+const { STARTING_BALANCE } = require('../config');
 
 class AccountTable {
     static storeAccount({ username, password }) {
@@ -8,8 +9,10 @@ class AccountTable {
             const hash = bcrypt.hashSync(password, 10);
             // password = hash;
             pool.query(
-                'INSERT INTO account(username, password) values($1,$2)',
-                [username, hash],
+                `INSERT INTO
+                account(username, password, balance)
+                VALUES($1,$2,$3)`,
+                [username, hash, STARTING_BALANCE],
                 (err, res) => {
                     if (err) return reject(err);
                     resolve();
@@ -21,7 +24,7 @@ class AccountTable {
     static getAccount({ username }) {
         return new Promise((resolve, reject) => {
             pool.query(
-                `SELECT id, password, "sessionId" FROM account
+                `SELECT id, password, "sessionId", balance FROM account
                  WHERE username=$1`,
                 [username],
                 (err, res) => {

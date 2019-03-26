@@ -7,6 +7,8 @@ Object.defineProperties(DRAGON_OBJ_DEFAULTS, {
     birthday: { get: () => new Date().toLocaleString() },
     nickname: { get: () => 'unnamed' },
     generationId: { get: () => undefined },
+    isPublic: { get: () => false },
+    saleValue: { get: () => 0 },
     traits: {
         //get random traits if none are provided
         get: () => {
@@ -28,11 +30,21 @@ Object.defineProperties(DRAGON_OBJ_DEFAULTS, {
 });
 
 class Dragon {
-    constructor({ dragonId, birthday, nickname, generationId, traits } = {}) {
+    constructor({
+        dragonId,
+        birthday,
+        nickname,
+        generationId,
+        isPublic,
+        saleValue,
+        traits
+    } = {}) {
         this.dragonId = dragonId || DRAGON_OBJ_DEFAULTS.dragonId;
         this.birthday = birthday || DRAGON_OBJ_DEFAULTS.birthday;
         this.nickname = nickname || DRAGON_OBJ_DEFAULTS.nickname;
         this.traits = traits || DRAGON_OBJ_DEFAULTS.traits;
+        this.isPublic = isPublic || DRAGON_OBJ_DEFAULTS.isPublic;
+        this.saleValue = saleValue || DRAGON_OBJ_DEFAULTS.saleValue;
         this.generationId = generationId || DRAGON_OBJ_DEFAULTS.generationId;
     }
 }
