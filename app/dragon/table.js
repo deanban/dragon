@@ -70,23 +70,46 @@ class DragonTable {
     }
 
     static updateDragon({ dragonId, nickname, isPublic, saleValue }) {
-        return new Promise((resolve, reject) => {
-            pool.query(
-                `UPDATE dragon SET nickname=$1,
-                "isPublic"=$2, "saleValue"=$3,
-                WHERE id=$4`,
-                [nickname, isPublic, saleValue, dragonId],
-                (err, res) => {
-                    if (err) return reject(err);
-                    resolve();
+        const settingsMap = { nickname, isPublic, saleValue };
+
+        const validQueries = Object.entries(settingsMap).filter(
+            ([key, val]) => {
+                // console.log(key, val);
+
+                if (val !== undefined) {
+                    return new Promise((resolve, reject) => {
+                        pool.query(
+                            `UPDATE dragon SET "${key}"=$1
+                          WHERE id=$2`,
+                            [val, dragonId],
+                            (err, res) => {
+                                if (err) return reject(err);
+                                resolve();
+                            }
+                        );
+                    });
                 }
-            );
-        });
+            }
+        );
+
+        return Promise.all(validQueries);
+
+        // return new Promise((resolve, reject) => {
+        //     pool.query(
+        //         `UPDATE dragon SET nickname=$1, "isPublic"=$2, "saleValue"=$3
+        //         WHERE id=$4`,
+        //         [nickname, isPublic, saleValue, dragonId],
+        //         (err, res) => {
+        //             if (err) return reject(err);
+        //             resolve();
+        //         }
+        //     );
+        // });
     }
 }
 
-// DragonTable.getDragon({ dragonId: 1 })
-//     .then(dragon => console.log(dragon))
-//     .catch(err => console.log(err));
+DragonTable.updateDragon({ dragonId: 1, nickname: 'fooby' })
+    .then(dragon => console.log(dragon))
+    .catch(err => console.log(err));
 
 module.exports = DragonTable;
