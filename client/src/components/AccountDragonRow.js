@@ -8,20 +8,30 @@ import DragonAvatar from './DragonAvatar';
 export default class AccountDragonRow extends Component {
   state = {
     nickname: this.props.dragon.nickname,
+    isPublic: this.props.dragon.isPublic,
+    saleValue: this.props.dragon.saleValue,
     edit: false
   };
 
-  updateNickname = (e) => {
-    this.setState({ nickname: e.target.value });
-  };
+  get SaveButton() {
+    return <Button onClick={this.saveDragon}>Save</Button>;
+  }
 
-  saveNickname = () => {
+  get EditButton() {
+    return <Button onClick={this.toggleEdit}>Edit</Button>;
+  }
+
+  saveDragon = () => {
+    const { nickname, isPublic, saleValue } = this.state;
+
     fetch('http://localhost:3001/dragon/update', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         dragonId: this.props.dragon.dragonId,
-        nickname: this.state.nickname
+        nickname,
+        isPublic,
+        saleValue
       })
     })
       .then(res => res.json())
@@ -35,13 +45,17 @@ export default class AccountDragonRow extends Component {
       .catch(err => console.log(err));
   };
 
-  get SaveButton() {
-    return <Button onClick={this.saveNickname}>Save</Button>;
-  }
+  updateNickname = (e) => {
+    this.setState({ nickname: e.target.value });
+  };
 
-  get EditButton() {
-    return <Button onClick={this.toggleEdit}>Edit</Button>;
-  }
+  updateSaleValue = (e) => {
+    this.setState({ saleValue: e.target.value });
+  };
+
+  updateIsPublic = (e) => {
+    this.setState({ isPublic: e.target.checked });
+  };
 
   toggleEdit = () => {
     this.setState(({ edit }) => ({ edit: !edit }));
@@ -50,14 +64,36 @@ export default class AccountDragonRow extends Component {
   render() {
     return (
       <div>
-        <input
-          type="text"
-          value={this.state.nickname}
-          onChange={this.updateNickname}
-          disabled={!this.state.edit}
-        />
-        {'        '}
-        {this.state.edit ? this.SaveButton : this.EditButton}
+        <div>
+          <span>
+            Nick Name:
+            {'  '}
+            <input
+              type="text"
+              value={this.state.nickname}
+              onChange={this.updateNickname}
+              disabled={!this.state.edit}
+            />
+            {'        '}
+            Sale Value:
+            {' '}
+            <input
+              type="number"
+              disabled={!this.state.edit}
+              value={this.state.saleValue}
+              onChange={this.updateSaleValue}
+            />
+            {' '}
+            Public:
+            <input
+              type="checkbox"
+              disabled={!this.state.edit}
+              checked={this.state.isPublic}
+              onChange={this.updateIsPublic}
+            />
+          </span>
+          <div>{this.state.edit ? this.SaveButton : this.EditButton}</div>
+        </div>
         <br />
         <DragonAvatar dragon={this.props.dragon} />
       </div>
