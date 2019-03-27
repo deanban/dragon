@@ -10,9 +10,7 @@ import store from './store/store';
 
 import Root from './components/Root';
 import AccountDragons from './components/AccountDragons';
-
-// need to make a call to public dragons api to get public dragons here.
-import { fetchPublicDragons } from './actions/publicDragonAction';
+import PublicDragons from './components/PublicDragons';
 
 // const store = createStore(generationReducer);
 
@@ -35,9 +33,6 @@ const AuthRouteHOC = (props) => {
   return <Route exact path={path} component={component} />;
 };
 
-// get all the public dragons to make available to everyone
-// store.dispatch(fetchPublicDragons());
-
 class App extends Component {
   render() {
     return (
@@ -50,6 +45,7 @@ class App extends Component {
                 path="/account-dragons"
                 component={AccountDragons}
               />
+              <AuthRouteHOC path="/public-dragons" component={PublicDragons} />
             </Switch>
           </Router>
         </div>
