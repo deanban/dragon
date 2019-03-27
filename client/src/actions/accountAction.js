@@ -19,7 +19,7 @@ export const fetchAccountType = ({
 }) => (dispatch) => {
   dispatch(setLoadingTrue(LOADING_TYPE1));
 
-  fetch(`http://localhost:3001/account/${endpoint}`, opts)
+  fetch(`/account/${endpoint}`, opts)
     .then(res => res.json())
     .then((json) => {
       // console.log(json);

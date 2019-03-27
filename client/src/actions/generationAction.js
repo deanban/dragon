@@ -12,7 +12,7 @@ export const getGeneration = () => (dispatch) => {
   // debugger;
   dispatch(setLoadingTrue());
 
-  fetch('http://localhost:3001/dragon/generation')
+  fetch('/dragon/generation')
     .then(resp => resp.json())
     .then((data) => {
       // debugger;

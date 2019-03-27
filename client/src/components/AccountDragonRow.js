@@ -24,7 +24,7 @@ export default class AccountDragonRow extends Component {
   saveDragon = () => {
     const { nickname, isPublic, saleValue } = this.state;
 
-    fetch('http://localhost:3001/dragon/update', {
+    fetch('/dragon/update', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -11,7 +11,7 @@ const setLoadingFalse = () => ({
 export const fetchPublicDragons = () => (dispatch) => {
   dispatch(setLoadingTrue());
 
-  return fetch('http://localhost:3001/dragon/public-dragons')
+  return fetch('/dragon/public-dragons')
     .then(res => res.json())
     .then((json) => {
       if (json.type === 'error') {

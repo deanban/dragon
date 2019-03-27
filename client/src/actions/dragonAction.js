@@ -11,7 +11,7 @@ const setLoadingFalse = () => ({
 export const fetchNewDragon = () => (dispatch) => {
   dispatch(setLoadingTrue());
 
-  fetch('http://localhost:3001/dragon/new', { credentials: 'include' })
+  fetch('/dragon/new', { credentials: 'include' })
     .then(res => res.json())
     .then((json) => {
       // console.log(json);
