@@ -48,6 +48,24 @@ class AccountTable {
             );
         });
     }
+
+    static updateBalance({ accountId, value }) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                `UPDATE account SET balance = balance + $1
+          WHERE id=$2`,
+                [value, accountId],
+                (err, res) => {
+                    if (err) return reject(err);
+                    resolve();
+                }
+            );
+        });
+    }
 }
+
+// AccountTable.updateBalance({ accountId: 1, value: 1000000 })
+//     .then(() => console.log('update'))
+//     .catch(err => console.log(err));
 
 module.exports = AccountTable;
