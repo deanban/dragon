@@ -1,3 +1,4 @@
+const fs = require('fs');
 const TRAITS = require('../../data/traits.json');
 
 const DRAGON_OBJ_DEFAULTS = {};
@@ -5,12 +6,25 @@ const DRAGON_OBJ_DEFAULTS = {};
 Object.defineProperties(DRAGON_OBJ_DEFAULTS, {
     dragonId: { get: () => undefined },
     birthday: { get: () => new Date().toLocaleString() },
-    nickname: { get: () => 'unnamed' },
+    nickname: {
+        //assign  random names
+        get: () => {
+            let nameArr = fs
+                .readFileSync('data/dragon_names.txt')
+                .toString('utf-8')
+                .split('\n')
+                .filter(names => names !== '');
+
+            return nameArr[
+                Math.floor(Math.random() * nameArr.length)
+            ].toString();
+        }
+    },
     generationId: { get: () => undefined },
     isPublic: { get: () => false },
     saleValue: { get: () => 0 },
     traits: {
-        //get random traits if none are provided
+        //assign random traits
         get: () => {
             const traitsArr = [];
 
