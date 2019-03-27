@@ -1,3 +1,10 @@
+/***************************************************** */
+//some test code
+//following codes has nothing to do with the main app
+
+//using this file for testing and cleaning data files
+/***************************************************** */
+
 const fs = require('fs');
 
 let nameArr = fs

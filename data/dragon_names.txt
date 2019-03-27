@@ -91,7 +91,6 @@ Illuyankas
 
 Jabberwock
 
-
 Jormungandr
 
 Julunggul
@@ -141,7 +140,6 @@ Riptide
 Rhaegal
 
 Scatha
-
 
 Scylla
 
