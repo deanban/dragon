@@ -22,7 +22,7 @@
     "   ": "./bin/configure_db.sh",
     "confdev": "yarn configure && yarn dev",
     "both": "concurrently \"yarn dev\" \"yarn client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && node /bin/insertTraits.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.4",
