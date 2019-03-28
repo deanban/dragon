@@ -16,6 +16,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "configure": "./bin/configure_db.sh",
     "client-install": "yarn --cwd client install",
     "client": "yarn --cwd client start",
     "   ": "./bin/configure_db.sh",
