@@ -12,7 +12,7 @@ TRAITS.forEach(TRAIT => {
 
                 const traitId = res.rows[0].id;
 
-                console.log(`inserted trait -id: ${traitId}`);
+                // console.log(`inserted trait -id: ${traitId}`);
             }
         );
     });

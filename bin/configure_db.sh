@@ -1,5 +1,4 @@
 #!/bin/bash
-
 echo "Dropping dragondb"
 dropdb -U node_user dragondb
 
