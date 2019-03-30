@@ -1,4 +1,5 @@
-# dragon
+# Dragon
+# NodeJS, PostgreSQL, React, Redux.
 
 To run locally
   1. Download project
