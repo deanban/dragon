@@ -27,6 +27,7 @@ class AccountDragons extends Component {
             <hr />
           </div>
         ))}
+        <Link to="/">Home</Link>
       </div>
     );
   }
