@@ -2,7 +2,7 @@ const base64 = require('base-64');
 const Dragon = require('./dragon');
 
 class Breeder {
-    static breedDragons({ matron, patron }) {
+    static breedDragon({ matron, patron }) {
         const matronTraits = matron.traits;
         const patronTraits = patron.traits;
         let babyTraits = [];
@@ -54,9 +54,9 @@ class Breeder {
 
 module.exports = Breeder;
 
-const fooby = new Dragon();
-const gooby = new Dragon();
+// const fooby = new Dragon();
+// const gooby = new Dragon();
 
-const foogooby = Breeder.breedDragons({ matron: fooby, patron: gooby });
+// const foogooby = Breeder.breedDragon({ matron: fooby, patron: gooby });
 
-console.log(foogooby);
+// console.log(foogooby);

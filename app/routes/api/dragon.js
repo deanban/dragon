@@ -1,9 +1,13 @@
 const express = require('express');
+const Breeder = require('../../dragon/breeder');
 const DragonTable = require('../../dragon/table');
 const AccountTable = require('../../account/table');
 const AccountDragonTable = require('../../accountDragon/table');
 const { authenticatedAccount } = require('./helper');
-const { getPublicDragons } = require('../../dragon/helper');
+const {
+    getPublicDragons,
+    getDragonWithTraits
+} = require('../../dragon/helper');
 
 const router = express.Router();
 
@@ -104,4 +108,66 @@ router.post('/buy', (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.post('/mate', (req, res, next) => {
+    const { matronDragonId, patronDragonId } = req.body;
+    let matronDragon, patronDragon, patronSireValue;
+    let matronAccountId, patronAccountId;
+
+    getDragonWithTraits({ dragonId: patronDragonId })
+        .then(dragon => {
+            if (!dragon.isPublic) throw new Error('Dragon must be public');
+
+            patronDragon = dragon;
+            patronSireValue = dragon.sireValue;
+
+            return getDragonWithTraits({ dragonId: matronDragonId });
+        })
+        .then(dragon => {
+            matronDragon = dragon;
+            return authenticatedAccount({ sessionStr: req.cookies.sessionStr });
+        })
+        .then(({ account, authenticated }) => {
+            if (!authenticated) throw new Error('Not authenticated');
+
+            if (patronSireValue > account.balance)
+                throw new Error('Sire value exceeds balance');
+
+            matronAccountId = account.id;
+
+            return AccountDragonTable.getDragonAccount({
+                dragonId: patronDragonId
+            });
+        })
+        .then(({ accountId }) => {
+            patronAccountId = accountId;
+
+            if (matronAccountId === patronAccountId)
+                throw new Error('Can not breed your own dragons!');
+
+            const dragon = Breeder.breedDragon({
+                matron: matronDragon,
+                patron: patronDragon
+            });
+
+            return DragonTable.storeDragon(dragon);
+        })
+        .then(({ dragonId }) => {
+            Promise.all([
+                AccountTable.updateBalance({
+                    accountId: matronAccountId,
+                    value: -patronSireValue
+                }),
+                AccountTable.updateBalance({
+                    accountId: patronAccountId,
+                    value: patronSireValue
+                }),
+                AccountDragonTable.storeAccountDragon({
+                    dragonId,
+                    accountId: matronAccountId
+                })
+            ]);
+        })
+        .then(() => res.json({ message: 'Success!' }))
+        .catch(err => next(err));
+});
 module.exports = router;
