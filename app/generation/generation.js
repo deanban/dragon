@@ -3,6 +3,7 @@ const Dragon = require('../dragon/dragon');
 
 class Generation {
     constructor() {
+        this.accountIds = new Set(); //set with unique ids
         this.expiration = this.calculateDragonExpiration();
 
         //generationId will get updated in the engine file
@@ -23,6 +24,7 @@ class Generation {
     }
 
     newDragon({
+        accountId,
         birthday,
         nickname,
         generationId = this.generationId,
@@ -31,6 +33,11 @@ class Generation {
         if (Date.now() > this.expiration) {
             throw new Error(`This dragon expired on ${this.expiration}`);
         }
+        if (this.accountIds.has(accountId))
+            throw new Error('You already have a dragon from this generation.');
+
+        this.accountIds.add(accountId);
+
         return new Dragon({ birthday, nickname, generationId, traits });
     }
 }

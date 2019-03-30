@@ -10,11 +10,23 @@ class Dragon extends Component {
     this.props.fetchNewDragon();
   }
 
+  get DragonView() {
+    const { dragon } = this.props;
+    // if (dragon.error !== '') {
+    //   return (
+    //     <span>
+    //       <h6>You already have a dragon from this generation.</h6>
+    //     </span>
+    //   );
+    // }
+    return <DragonAvatar dragon={dragon} />;
+  }
+
   render() {
     return (
       <div>
         <Button onClick={this.props.fetchNewDragon}>New Dragon</Button>
-        <DragonAvatar dragon={this.props.dragon} />
+        {this.DragonView}
       </div>
     );
   }
