@@ -47,6 +47,14 @@
   top: 30px;
 }
 
+.account-dragon-row-input {
+  width: 75px;
+  margin-right: 15px;
+}
+.account-dragon-row-checkbox {
+  margin-left: 30px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

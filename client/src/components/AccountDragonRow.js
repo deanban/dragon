@@ -86,6 +86,7 @@ export default class AccountDragonRow extends Component {
             Sale Value:
             {' '}
             <input
+              className="account-dragon-row-input"
               type="number"
               disabled={!this.state.edit}
               value={this.state.saleValue}
@@ -94,6 +95,7 @@ export default class AccountDragonRow extends Component {
             Sire Value:
             {' '}
             <input
+              className="account-dragon-row-input"
               type="number"
               disabled={!this.state.edit}
               value={this.state.sireValue}
@@ -102,6 +104,7 @@ export default class AccountDragonRow extends Component {
             {' '}
             Public:
             <input
+              className="account-dragon-row-checkbox"
               type="checkbox"
               disabled={!this.state.edit}
               checked={this.state.isPublic}
