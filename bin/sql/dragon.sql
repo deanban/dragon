@@ -5,5 +5,6 @@ CREATE TABLE dragon(
   "generationId"  INTEGER,
   "isPublic"      BOOLEAN NOT NULL,
   "saleValue"     INTEGER NOT NULL,
+  "sireValue"     INTEGER NOT NULL,
   FOREIGN KEY ("generationId") REFERENCES generation(id)
 );

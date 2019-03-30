@@ -26,7 +26,7 @@ class Breeder {
 
     static pickTraits({ matronTrait, patronTrait }) {
         console.log('breeding started');
-        //string value of both traits are encoded to introduce some randomacy..
+        //string value of both traits are encoded to find dominant traits and to introduce some randomacy..
         //..with 50% chance of being picked from either.
         // Both traits have their character summed.
         //get a range by adding both character sums.

@@ -23,6 +23,7 @@ Object.defineProperties(DRAGON_OBJ_DEFAULTS, {
     generationId: { get: () => undefined },
     isPublic: { get: () => false },
     saleValue: { get: () => 5 },
+    sireValue: {},
     traits: {
         //assign random traits
         get: () => {
@@ -51,6 +52,7 @@ class Dragon {
         generationId,
         isPublic,
         saleValue,
+        sireValue,
         traits
     } = {}) {
         this.dragonId = dragonId || DRAGON_OBJ_DEFAULTS.dragonId;
@@ -59,6 +61,7 @@ class Dragon {
         this.traits = traits || DRAGON_OBJ_DEFAULTS.traits;
         this.isPublic = isPublic || DRAGON_OBJ_DEFAULTS.isPublic;
         this.saleValue = saleValue || DRAGON_OBJ_DEFAULTS.saleValue;
+        this.sireValue = sireValue || DRAGON_OBJ_DEFAULTS.sireValue;
         this.generationId = generationId || DRAGON_OBJ_DEFAULTS.generationId;
     }
 }
