@@ -41,7 +41,7 @@ router.get('/public-dragons', (req, res, next) => {
         .catch(err => next(err));
 });
 
-router.get('/buy', (req, res, next) => {
+router.post('/buy', (req, res, next) => {
     const { dragonId, saleValue } = req.body;
     let buyerId;
 

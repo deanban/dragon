@@ -3,11 +3,10 @@ import { Provider } from 'react-redux';
 import {
   Router, Switch, Route, Redirect
 } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import './App.css';
 
 import store from './store/store';
-
+import history from './history';
 import Root from './components/Root';
 import AccountDragons from './components/AccountDragons';
 import PublicDragons from './components/PublicDragons';
@@ -20,8 +19,6 @@ import PublicDragons from './components/PublicDragons';
 // });
 
 // console.log(store.getState());
-
-const history = createBrowserHistory();
 
 const AuthRouteHOC = (props) => {
   if (!store.getState().account.loggedIn) {
