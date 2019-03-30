@@ -18,13 +18,22 @@ const propertyMap = {
     blue: '#0277bd'
   },
   build: {
-    slender, stocky, sporty, skinny
+    slender,
+    stocky,
+    sporty,
+    skinny
   },
   pattern: {
-    plain, striped, spotted, patchy
+    plain,
+    striped,
+    spotted,
+    patchy
   },
   size: {
-    small: 100, medium: 140, large: 180, enormous: 220
+    small: 100,
+    medium: 140,
+    large: 180,
+    enormous: 220
   }
 };
 

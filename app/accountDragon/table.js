@@ -26,6 +26,33 @@ class AccountDragonTable {
             );
         });
     }
+
+    static getDragonAccount({ dragonId }) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                'SELECT "accountId" FROM accountDragon WHERE "dragonId"=$1',
+                [dragonId],
+                (err, res) => {
+                    if (err) return reject(err);
+                    resolve({ accountId: res.rows[0].accountId });
+                }
+            );
+        });
+    }
+
+    static updateDragonAccount({ dragonId, accountId }) {
+        return new Promise((resolve, reject) => {
+            pool.query(
+                `UPDATE accountDragon SET "accountId"=$1
+                 WHERE "dragonId"=$2`,
+                [accountId, dragonId],
+                (err, res) => {
+                    if (err) return reject(err);
+                    resolve();
+                }
+            );
+        });
+    }
 }
 
 // AccountDragonTable.storeAccountDragon({
@@ -40,5 +67,17 @@ class AccountDragonTable {
 // })
 //     .then(({ accountDragons }) => console.log(accountDragons))
 //     .catch(err => console.log(err));
+AccountDragonTable.getDragonAccount({
+    dragonId: 1
+})
+    .then(({ accountId }) => console.log(accountId))
+    .catch(err => console.log(err));
+
+AccountDragonTable.updateDragonAccount({
+    dragonId: 1,
+    accountId: 1
+})
+    .then(() => console.log('success'))
+    .catch(err => console.log(err));
 
 module.exports = AccountDragonTable;
