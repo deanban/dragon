@@ -10,8 +10,8 @@
     "nodemon": "^1.18.10"
   },
   "engines": {
-    "node": "8.5.0",
-    "npm": "5.3.0"
+    "node": "11.3.0",
+    "npm": "6.4.1"
   },
   "scripts": {
     "start": "node server.js",
@@ -25,6 +25,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && node ./bin/insertTraits.js"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",

@@ -22,7 +22,7 @@ Object.defineProperties(DRAGON_OBJ_DEFAULTS, {
     },
     generationId: { get: () => undefined },
     isPublic: { get: () => false },
-    saleValue: { get: () => 0 },
+    saleValue: { get: () => 5 },
     traits: {
         //assign random traits
         get: () => {
