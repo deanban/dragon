@@ -10,6 +10,7 @@ export default class AccountDragonRow extends Component {
     nickname: this.props.dragon.nickname,
     isPublic: this.props.dragon.isPublic,
     saleValue: this.props.dragon.saleValue,
+    sireValue: this.props.dragon.sireValue,
     edit: false
   };
 
@@ -22,7 +23,9 @@ export default class AccountDragonRow extends Component {
   }
 
   saveDragon = () => {
-    const { nickname, isPublic, saleValue } = this.state;
+    const {
+      nickname, isPublic, saleValue, sireValue
+    } = this.state;
 
     fetch('/dragon/update', {
       method: 'PUT',
@@ -31,7 +34,8 @@ export default class AccountDragonRow extends Component {
         dragonId: this.props.dragon.dragonId,
         nickname,
         isPublic,
-        saleValue
+        saleValue,
+        sireValue
       })
     })
       .then(res => res.json())
@@ -51,6 +55,10 @@ export default class AccountDragonRow extends Component {
 
   updateSaleValue = (e) => {
     this.setState({ saleValue: e.target.value });
+  };
+
+  updateSireValue = (e) => {
+    this.setState({ sireValue: e.target.value });
   };
 
   updateIsPublic = (e) => {
@@ -82,6 +90,14 @@ export default class AccountDragonRow extends Component {
               disabled={!this.state.edit}
               value={this.state.saleValue}
               onChange={this.updateSaleValue}
+            />
+            Sire Value:
+            {' '}
+            <input
+              type="number"
+              disabled={!this.state.edit}
+              value={this.state.sireValue}
+              onChange={this.updateSireValue}
             />
             {' '}
             Public:

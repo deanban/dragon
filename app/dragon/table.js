@@ -15,7 +15,7 @@ class DragonTable {
 
         return new Promise((resolve, reject) => {
             pool.query(
-                `INSERT INTO dragon(birthday, nickname, "generationId", "isPublic", "saleValue", "sireValue)
+                `INSERT INTO dragon(birthday, nickname, "generationId", "isPublic", "saleValue", "sireValue")
                 VALUES($1, $2, $3, $4, $5, $6) RETURNING id`,
                 [
                     birthday,
@@ -63,7 +63,7 @@ class DragonTable {
     static getDragon({ dragonId }) {
         return new Promise((resolve, reject) => {
             pool.query(
-                `SELECT birthday, nickname, "generationId", "isPublic", "saleValue", "sireValue FROM dragon
+                `SELECT birthday, nickname, "generationId", "isPublic", "saleValue", "sireValue" FROM dragon
                 WHERE dragon.id=$1`,
                 [dragonId],
                 (err, res) => {
