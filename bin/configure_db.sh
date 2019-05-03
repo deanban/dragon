@@ -18,6 +18,7 @@ psql -U node_user dragondb < ./bin/sql/dragonTrait.sql
 echo "Assaigning Dragons to Users: Running accountDragon.sql"
 psql -U node_user dragondb < ./bin/sql/accountDragon.sql
 
+# on heroku- 'heroku run node *filename'
 node ./bin/insertTraits.js
 
 echo "dragondb has been configured. Good luck with your new dragons."
